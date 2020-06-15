@@ -3,3 +3,6 @@
 ################################################################################
 
 /.vs
+/React.AspNetCoreLatest/.vs/React.AspNetCoreLatest/v16
+/React.AspNetCoreLatest/React.AspNetCoreLatest/bin/Debug/netcoreapp3.1
+/React.AspNetCoreLatest/React.AspNetCoreLatest/obj
