@@ -2,57 +2,77 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 
-////------------Introduction to Class Component--------//////////
-//To defined a class component in React, we have to create a class and extend it React.Component class.
-//Component(both function and class) cannot modify its own properties.
-//Component properties are read only.
-//When we create a constructor, before we performe any operation within the constructor we must make a call to the base class constructor.
-//
-//When we use class components
-//1. Managing state of the component.
-//2. Adding life cycle methods to component.
-//3. Need to write logic for event handlers.
-//
-//Rest of the other things we can write functional component.
+////------------Introduction to State in React Class Component--------//////////
+//Change there output overtime in response to variouse user actions.
+//State similar to props.
+//This is private.
+//State fully control by the component class.
+//State contains data specific to a given component that may change over time.
+//State is user defined javascript object.
+//"SetState" method = managing component state.
+//"SetState" method tells to react this component and its children should be re-render with the most update state.
 
-class Employee extends React.Component {
+
+class CountCharacters extends React.Component {
     constructor(props) {
         super(props);
-        console.log(this.props);
+        this.state = {
+            message: '',
+            counter: 10
+        };
     }
+
+    onMessageChange(text) {
+        this.setState({
+            message: 'Message has ' + text.length + ' number of characters.'
+        });
+    }
+
     render() {
         return <div>
-            <h1>Employee Details...</h1>
+            <h2> Welcome to count characters component...</h2>
             <p>
-                <label>Employee Id: <b>{this.props.Id}</b></label>
+                <label>Enter message: <input type="text" onChange={e => this.onMessageChange(e.target.value)}></input> </label>
+
             </p>
             <p>
-                <label>Employee Name: <b>{this.props.Name}</b></label>
+                <label>{this.state.message}</label>
             </p>
             <p>
-                <label>Employee Location: <b>{this.props.Location}</b></label>
+                <label>{this.state.counter}</label>
             </p>
-            <p>
-                <label>Employee Salary: <b>{this.props.Salary}</b></label>
-            </p>
-            <Department DptName={this.props.DptName} DptHeadName={this.props.DptHeadName} ></Department>
-        </div>;
+        </div>
+
     }
 }
 
-class Department extends React.Component {
-    render() {
-        return <div>
-            <h2>Department Details...</h2>
-            <p>
-                <label>Department Name: <b>{this.props.DptName}</b></label>
-            </p>
-            <p>
-                <label>Department Head: <b>{this.props.DptHeadName}</b></label>
-            </p>
-        </div>;
-    }
-}
-
-const element = <Employee Id="101" Name="Roshan" Location="Kurunegala" Salary="12345" DptName="UI dev" DptHeadName="Gunarathna"></Employee>;
+const element = <CountCharacters></CountCharacters>
 ReactDOM.render(element, document.getElementById("root"));
+
+
+class Employee extends React.Component {
+    state = { counter: 0 };
+    counter = 0;
+    addEmployee = () => {
+        this.setState({ counter: this.state.counter + 1 });
+        //this.counter = this.counter + 1;
+        //alert("Add a new Employee.");
+        //alert('Add Employee button is clicked ' + this.counter +' times.');
+    }
+    render() {
+        return <div>
+            <h2>Welcome to Employee Component...</h2>
+            <p>
+                <button onClick={this.addEmployee}>Add Employee</button>
+            </p>
+            <p>
+                <label>Add Employee button is clicked <b>{this.state.counter}</b> times.</label>
+            </p>
+        </div>
+    }
+}
+
+//const element = <Employee></Employee>
+//ReactDOM.render(element, document.getElementById("root"));
+
+
