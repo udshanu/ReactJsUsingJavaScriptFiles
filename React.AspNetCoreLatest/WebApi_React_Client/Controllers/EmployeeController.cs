@@ -28,5 +28,10 @@ namespace WebApi_React_Client.Controllers
 
             return empList;
         }
+
+        public bool Post(Employee employee)
+        {
+            return true;
+        }
     }
 }

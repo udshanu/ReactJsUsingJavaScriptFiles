@@ -3,51 +3,56 @@ import ReactDOM from 'react-dom';
 import './index.css';
 
 
-////------------How to call REST API from React App--------//////////
-//Mounting in React - Fetches the list of employees From rest api Whenever Employee Component render to the DOM.
+////------------Sending POST Request from React App to REST API--------//////////
 
-class EmployeeComponent extends React.Component {
-    constructor(props) {
+class EmployeeComponent extends React.Component{
+    constructor(props){
         super(props);
 
-        this.state = { employees: [] };
+        this.state={
+            message:''
+        };
     }
 
-    componentDidMount() {
-        fetch("https://localhost:44336/api/Employee").then(res => res.json()).then(
-            result => {
-                this.setState({ employees: result });
-                console.log(result);
+    onCreateEmployee=()=>{
+        let empInfo={
+            Id:this.refs.id.value,
+            Name:this.refs.name.value,
+            Location:this.refs.location.value,
+            Salary: this.refs.salary.value
+        };
+
+        fetch('https://localhost:44336/api/Employee',
+        {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(empInfo)},
+        ).then(r=>r.json()).then(result=>{
+            if(result){
+                this.setState({message: 'New employee is created successfully.'});
             }
-        )
+        });
     }
 
-    render() {
-        return (<div>
-            <h2>Employee Details...</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Id</th>
-                        <th>Name</th>
-                        <th>Location</th>
-                        <th>Salary</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {this.state.employees.map(emp => (
-                        <tr key={emp.Id}>
-                            <td>{emp.Id}</td>
-                            <td>{emp.Name}</td>
-                            <td>{emp.Location}</td>
-                            <td>{emp.Salary}</td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-        </div>);
+    render(){
+        return (
+            <div>
+                <h2>Please Enter Employee Details...</h2>
+                <p>
+                    <label>Id: <input type="text" ref="id"></input></label>
+                </p>
+                <p>
+                    <label>Name: <input type="text" ref="name"></input></label>
+                </p>
+                <p>
+                    <label>Location: <input type="text" ref="location"></input></label>
+                </p>
+                <p>
+                    <label>Salary: <input type="text" ref="salary"></input></label>
+                </p>
+                <button onClick={this.onCreateEmployee}>Create</button>
+                <p>{this.state.message}</p>
+            </div>
+        );
     }
 }
 
-const element = <EmployeeComponent></EmployeeComponent>
+const element = <EmployeeComponent></EmployeeComponent>;
 ReactDOM.render(element, document.getElementById("root"));
