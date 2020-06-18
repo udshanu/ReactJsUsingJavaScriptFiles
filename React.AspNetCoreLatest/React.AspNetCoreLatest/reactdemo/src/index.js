@@ -2,80 +2,80 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 
-////------------Interaction between React Component(Child to Parent using "Callback" function)--------//////////
-//There are 3 types of interaction,
-//1.Parent to Child.
-//2.Child to Parent.
-//3.Between Sibilings.
 
+////------------Component Communication Using Context(From Parent comonent to nested child components)--------//////////
+//In typical react application data is passed from parent component to the child component via properties.
+//But this can be difficult for 2nd types of proprties that are required by many components which are nested at different level with in an application.
+//How do we used context in react to passed the data between components placed it deffierent nesting levels.
+//Context provids a way to pass data through the components without having to pass properties from parent to child manually at every level.
+//Context provids a way to share values between component without having to explicity pass property to every level of the tree.
+//Context is primarally used when some data needs to be accessible by many components at different nesting levels.
+//When you're defining the context variable in the child component, you have to define it as 'static contextType=employeeContext' and not 'static context=employeeContext'.
+//Descendants of a Provider will re-render whenever the Provider value changes.
 
-class Employee extends React.Component {
+const employeeContext=React.createContext();
+
+class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            updatedSalary:null
-        }
+            Id: 101,
+            Name: "Roshan",
+            Location: "Kurunegala",
+            Salary: 15000
+        };
     }
 
-    getUpdatedSalary = (salary) => {
-        this.setState({ updatedSalary: salary});
+    changeEmployeeData = () => {
+        this.setState({
+            Id: 102
+        });
     }
 
     render() {
         return <div>
-            <h1>Employee Component...</h1>
+            <h2>Welcome to App Component..</h2>
             <p>
-                <label>Id : <b>{this.props.Id}</b></label>
+                <label>Employee Id: <b>{this.state.Id}</b></label>
             </p>
+            <employeeContext.Provider value={this.state}>
+                <Employee></Employee>
+            </employeeContext.Provider>
             <p>
-                <label>Name : <b>{this.props.Name}</b></label>
+                <button onClick={this.changeEmployeeData}>Update</button>
             </p>
-            <p>
-                <label>Location : <b>{this.props.Location}</b></label>
-            </p>
-            <p>
-                <label>Total Salary : <b>{this.props.Salary}</b></label>
-            </p>
-            <p>
-                <label>Updated Total Salary : <b>{this.state.updatedSalary}</b></label>
-            </p>
-            <Salary BasicSalary={this.props.BasicSalary} HRA={this.props.HRA} SpecialAllowance={this.props.SpecialAllowance} OnSalaryChanged={this.getUpdatedSalary}></Salary>
         </div>
     }
+}
 
+class Employee extends React.Component {
+    //static context = employeeContext;
+    static contextType = employeeContext;
+
+    render() {
+        return <div>
+            <h2>Welcome to Employee Component..</h2>
+            <p>
+                <label>Employee Id: <b>{this.context.Id}</b></label>
+            </p>
+            <Salary></Salary>
+        </div>
+    }
 }
 
 class Salary extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            basic: this.props.BasicSalary,
-            hra: this.props.HRA,
-            sa: this.props.SpecialAllowance
-        }
-    }
-
-    updateSalary = () => {
-        let salary = parseInt(this.refs.basic.value) + parseInt(this.refs.hra.value) + parseInt(this.refs.salary.value);
-        this.props.OnSalaryChanged(salary); //This is a callback function.
-    }
+    //static context = employeeContext;
+    static contextType = employeeContext;
 
     render() {
         return <div>
-            <h2>Salary Details....</h2>
+            <h2>Welcome to Salary Component..</h2>
             <p>
-                <label>Basic Salary : <input type="text" ref="basic" defaultValue={this.state.basic}></input></label>
+                <label>Employee Id: <b>{this.context.Id}</b></label>
             </p>
-            <p>
-                <label>HRA : <input type="text" ref="hra" defaultValue={this.state.hra}></input></label>
-            </p>
-            <p>
-                <label>Special Allowance : <input type="text" ref="salary" defaultValue={this.state.sa}></input></label>
-            </p>
-            <button onClick={this.updateSalary}>Update</button>
         </div>
     }
 }
 
-const element = <Employee Id="101" Name="Roshan" Location="Kurunegala" Salary="100000" BasicSalary="75000" HRA="10000" SpecialAllowance="15000"></Employee>;
+const element = <App></App>;
 ReactDOM.render(element, document.getElementById("root"));
