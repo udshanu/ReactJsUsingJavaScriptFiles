@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29613.14
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "React.AspNetCoreLatest", "React.AspNetCoreLatest\React.AspNetCoreLatest.csproj", "{297F8BD8-2FC9-4A8C-B6FB-2247CD0507F2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "React.AspNetCoreLatest", "React.AspNetCoreLatest\React.AspNetCoreLatest.csproj", "{297F8BD8-2FC9-4A8C-B6FB-2247CD0507F2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi_React_Client", "WebApi_React_Client\WebApi_React_Client.csproj", "{C0D47C57-B072-45D0-9BD9-88ADA3C3D383}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{297F8BD8-2FC9-4A8C-B6FB-2247CD0507F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{297F8BD8-2FC9-4A8C-B6FB-2247CD0507F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{297F8BD8-2FC9-4A8C-B6FB-2247CD0507F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C0D47C57-B072-45D0-9BD9-88ADA3C3D383}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C0D47C57-B072-45D0-9BD9-88ADA3C3D383}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C0D47C57-B072-45D0-9BD9-88ADA3C3D383}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C0D47C57-B072-45D0-9BD9-88ADA3C3D383}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

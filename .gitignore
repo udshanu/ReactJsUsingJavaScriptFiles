@@ -7,3 +7,6 @@
 /React.AspNetCoreLatest/React.AspNetCoreLatest/bin/Debug/netcoreapp3.1
 /React.AspNetCoreLatest/React.AspNetCoreLatest/obj
 /React.AspNetCoreLatest/.vs/React.AspNetCoreLatest/config
+/React.AspNetCoreLatest/packages
+/React.AspNetCoreLatest/WebApi_React_Client/bin
+/React.AspNetCoreLatest/WebApi_React_Client/obj/Debug
