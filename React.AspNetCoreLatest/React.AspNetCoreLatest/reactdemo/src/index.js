@@ -3,61 +3,39 @@ import ReactDOM from 'react-dom';
 import './index.css';
 
 
-////------------Component Communication Using Context(From Child comonents to Parent component)--------//////////
-//How do we update context from nested component and how do we communicate it back to the parent component.
+////------------Display Employee List in React--------//////////
 
-const employeeContext = React.createContext({
-    data:'',
-    changeEmployeeInfo:()=>{}
-});
-
-class App extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            data: {
-                Id: 101,
-                Name: "Roshan",
-                Location: "Kurunegala",
-                Salary: 15000
-            },
-            changeEmployeeInfo: this.updateEmployeeDetails
-        };
-    }
-
-    updateEmployeeDetails = () => {
-        this.setState({ data: { Id: 102}});
-    }
-
-    render() {
-        return <div>
-            <h2>Welcome to App Component..</h2>
-            <p>
-                <label>Employee Id: <b>{this.state.data.Id}</b></label>
-            </p>
-            <employeeContext.Provider value={this.state}>
-                <Employee></Employee>
-            </employeeContext.Provider>
-        </div>
-    }
+function Employee(props){
+    return <div style={{border: "3px solid red"}}>
+        <p>
+            <label>Employee Id: <b>{props.data.Id}</b></label>
+        </p>
+        <p>
+            <label>Name: <b>{props.data.Name}</b></label>
+        </p>
+        <p>
+            <label>Location: <b>{props.data.Location}</b></label>
+        </p>
+        <p>
+            <label>Salary: <b>{props.data.Salary}</b></label>
+        </p>
+    </div>
 }
 
-class Employee extends React.Component {
-    //static context = employeeContext;
-    static contextType = employeeContext;
+function DisplayEmployees(props){
 
-    render() {
-        return <div>
-            <h2>Welcome to Employee Component..</h2>
-            <p>
-                <label>Employee Id: <b>{this.context.data.Id}</b></label>
-            </p>
-            <p>
-                <button onClick={this.context.changeEmployeeInfo}>Update</button>
-            </p>
-        </div>
-    }
+    const empList = props.employeeList;
+    const listEmployees = empList.map((emp)=> <Employee key={emp.Id} data={emp}></Employee>);
+
+    return <div>{listEmployees}</div>
+
 }
 
-const element = <App></App>;
+const employees = [
+    { Id: 101, Name: "Roshan", Location: "Kurunegala", Salary: 15000 },
+    { Id: 102, Name: "Manoj", Location: "Thanthirigama", Salary: 25000 },
+    { Id: 103, Name: "Gunarathna", Location: "Makulwewa", Salary: 35000 }
+];
+
+const element = <DisplayEmployees employeeList={employees}></DisplayEmployees>;
 ReactDOM.render(element, document.getElementById("root"));
