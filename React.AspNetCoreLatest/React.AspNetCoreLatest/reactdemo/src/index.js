@@ -2,77 +2,59 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 
-////------------Introduction to State in React Class Component--------//////////
-//Change there output overtime in response to variouse user actions.
-//State similar to props.
-//This is private.
-//State fully control by the component class.
-//State contains data specific to a given component that may change over time.
-//State is user defined javascript object.
-//"SetState" method = managing component state.
-//"SetState" method tells to react this component and its children should be re-render with the most update state.
-
-
-class CountCharacters extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            message: '',
-            counter: 10
-        };
-    }
-
-    onMessageChange(text) {
-        this.setState({
-            message: 'Message has ' + text.length + ' number of characters.'
-        });
-    }
-
-    render() {
-        return <div>
-            <h2> Welcome to count characters component...</h2>
-            <p>
-                <label>Enter message: <input type="text" onChange={e => this.onMessageChange(e.target.value)}></input> </label>
-
-            </p>
-            <p>
-                <label>{this.state.message}</label>
-            </p>
-            <p>
-                <label>{this.state.counter}</label>
-            </p>
-        </div>
-
-    }
-}
-
-const element = <CountCharacters></CountCharacters>
-ReactDOM.render(element, document.getElementById("root"));
+////------------Interaction between React Component(Parent to Child using Properties)--------//////////
+//There are 3 types of interaction,
+//1.Parent to Child.
+//2.Child to Parent.
+//3.Between Sibilings.
 
 
 class Employee extends React.Component {
-    state = { counter: 0 };
-    counter = 0;
-    addEmployee = () => {
-        this.setState({ counter: this.state.counter + 1 });
-        //this.counter = this.counter + 1;
-        //alert("Add a new Employee.");
-        //alert('Add Employee button is clicked ' + this.counter +' times.');
+    constructor(props) {
+        super(props);
     }
+
     render() {
         return <div>
-            <h2>Welcome to Employee Component...</h2>
+            <h1>Employee Component...</h1>
             <p>
-                <button onClick={this.addEmployee}>Add Employee</button>
+                <label>Id : <b>{this.props.Id}</b></label>
             </p>
             <p>
-                <label>Add Employee button is clicked <b>{this.state.counter}</b> times.</label>
+                <label>Name : <b>{this.props.Name}</b></label>
+            </p>
+            <p>
+                <label>Location : <b>{this.props.Location}</b></label>
+            </p>
+            <p>
+                <label>Total Salary : <b>{this.props.Salary}</b></label>
+            </p>
+            <Salary BasicSalary={this.props.BasicSalary} HRA={this.props.HRA} SpecialAllowance={this.props.SpecialAllowance}></Salary>
+        </div>
+    }
+
+}
+
+class Salary extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
+    render() {
+        return <div>
+            <h2>Salary Details....</h2>
+            <p>
+                <label>Basic Salary : <b>{this.props.BasicSalary}</b></label>
+            </p>
+            <p>
+                <label>HRA : <b>{this.props.HRA}</b></label>
+            </p>
+            <p>
+                <label>Special Allowance : <b>{this.props.SpecialAllowance}</b></label>
             </p>
         </div>
     }
 }
 
-//const element = <Employee></Employee>
-//ReactDOM.render(element, document.getElementById("root"));
-
-
+const element = <Employee Id="101" Name="Roshan" Location="Kurunegala" Salary="100000" BasicSalary="75000" HRA="10000" SpecialAllowance="15000"></Employee>;
+ReactDOM.render(element, document.getElementById("root"));
