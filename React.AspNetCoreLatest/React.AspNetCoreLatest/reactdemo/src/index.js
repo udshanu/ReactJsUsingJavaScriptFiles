@@ -1,9 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { useFormik, Formik } from 'formik';
 import './index.css';
 
 
-////------------Understanding FORMS in React--------//////////
+////------------Create FORMS Using Formik library in React--------//////////
 //In React state of this input elements is typically kept in state property of the component, and only update it with setState method.
 //Input Form element controll by react in this fasion is called as "Controlled Inputs" or "Controlled Components".
 //The alternative is "Uncontrolled Inputs" or "Uncontrolled Components" where form data is handled by the DOM itself.
@@ -22,62 +23,43 @@ import './index.css';
 //2. Handling validation of form data.
 //3. Handiling form submition.
 
+const EmployeeComponent = () => {
+    const formik = useFormik({
+        initialValues: {
+            Id: '',
+            Name: '',
+            Location: '',
+            Salary: ''
+        },
+        onSubmit: values => {
+            alert(JSON.stringify(values));
+        }
+    });
 
-class EmployeeComponent extends React.Component{
-    constructor(props){
-        super(props);
-        this.state={
-            employee:{
-                Id:'',
-                Name:'',
-                Location:'',
-                Salary:''
-            }
-        };
-    }
-
-    changeHandler=e=>{
-        const name = e.target.name;
-        const value = e.target.value;
-
-        this.setState({employee:{
-            ...this.state.employee, [name]:value //this is the spred oparator.
-        }});
-    }
-
-    onCreateEmployee=()=>{
-        console.log(this.state.employee);
-    }
-
-    render(){
-        return(
-            <div>
-                <h2>New Employee Form...</h2>
+    return (
+        <div>
+            <h2>New Employee Form..</h2>
+            <form onSubmit={formik.handleSubmit}>
                 <p>
-                    <label>
-                         {/* Name property should equal to state employee object's names. */}
-                        Employee ID: <input type="Text" name="Id" value={this.state.employee.Id} onChange={this.changeHandler}></input> 
-                    </label>
+                    <label htmlFor="Id">Employee Id:</label>
+                    <input type="text" name="Id" id="Id" value={formik.values.Id} onChange={formik.handleChange}></input>
                 </p>
                 <p>
-                    <label>
-                        Employee Name: <input type="Text" name="Name" value={this.state.employee.Name} onChange={this.changeHandler}></input>
-                    </label>
+                    <label htmlFor="Name">Employee Name:</label>
+                    <input type="text" name="Name" id="Name" value={formik.values.Name} onChange={formik.handleChange}></input>
                 </p>
                 <p>
-                    <label>
-                        Employee Location: <input type="Text" name="Location" value={this.state.employee.Location} onChange={this.changeHandler}></input>
-                    </label>
+                    <label htmlFor="Location">Employee Location:</label>
+                    <input type="text" name="Location" id="Location" value={formik.values.Location} onChange={formik.handleChange}></input>
                 </p>
                 <p>
-                    <label>
-                        Employee Salary: <input type="Text" name="Salary" value={this.state.employee.Salary} onChange={this.changeHandler}></input>
-                    </label>
+                    <label htmlFor="Salary">Employee Salary:</label>
+                    <input type="text" name="Salary" id="Salary" value={formik.values.Salary} onChange={formik.handleChange}></input>
                 </p>
-                <button onClick={this.onCreateEmployee}>Create</button>
-            </div>
-        );
-    }
+                <button type="submit">Create</button>
+            </form>
+        </div>
+    );
 }
 
 const element = <EmployeeComponent></EmployeeComponent>;
