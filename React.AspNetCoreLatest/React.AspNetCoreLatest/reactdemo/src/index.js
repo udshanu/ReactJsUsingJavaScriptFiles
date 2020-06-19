@@ -1,34 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { useFormik, Formik } from 'formik';
+import { useFormik } from 'formik';
+import * as yup from "yup";
 import './index.css';
 
 
-////------------Understanding FORMS validation in React(In manually)--------//////////
+////------------Understanding FORMS validation in React(using "yup" library)--------//////////
 
-const validateEmployee = empData => {
-    const errors = {};
 
-    if (!empData.Name) {
-        errors.Name = 'Please enter employee name.';
-    }
-    else if (empData.Name.length > 20) {
-        errors.Name = 'Employee name should not exceed 20 characters.';
-    }
-
-    if (!empData.Location) {
-        errors.Location = 'Please enter employee location.';
-    }
-
-    if (!empData.EmailId) {
-        errors.EmailId = 'Please enter email id.';
-    }
-    else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(empData.EmailId)) {
-        errors.EmailId = 'Invalid email address.';
-    }
-
-    return errors;
-}
 
 const EmployeeComponent = () => {
     const formik = useFormik({
@@ -39,7 +18,11 @@ const EmployeeComponent = () => {
             Salary: '',
             EmailId: ''
         },
-        validate: validateEmployee,
+        validationSchema: yup.object({
+            Name: yup.string().max(20,'Employee name should not exceed 20 characters.').required('Please enter employee name.'),
+            Location: yup.string().required('Please enter employee location.'),
+            EmailId: yup.string().email('Invalid email address.').required('Please enter email id.')
+        }),
         onSubmit: values => {
             alert(JSON.stringify(values));
         }
