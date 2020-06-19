@@ -19,7 +19,7 @@ const EmployeeComponent = () => {
             EmailId: ''
         },
         validationSchema: yup.object({
-            Name: yup.string().max(20,'Employee name should not exceed 20 characters.').required('Please enter employee name.'),
+            Name: yup.string().max(20, 'Employee name should not exceed 20 characters.').required('Please enter employee name.'),
             Location: yup.string().required('Please enter employee location.'),
             EmailId: yup.string().email('Invalid email address.').required('Please enter email id.')
         }),
@@ -34,25 +34,25 @@ const EmployeeComponent = () => {
             <form onSubmit={formik.handleSubmit}>
                 <p>
                     <label htmlFor="Id">Employee Id:</label>
-                    <input type="text" name="Id" id="Id" value={formik.values.Id} onChange={formik.handleChange}></input>
+                    <input type="text" name="Id" {...formik.getFieldProps("Id")}></input>
                 </p>
                 <p>
                     <label htmlFor="Name">Employee Name:</label>
-                    <input type="text" name="Name" id="Name" value={formik.values.Name} onChange={formik.handleChange} onBlur={formik.handleBlur}></input>
+                    <input type="text" name="Name" {...formik.getFieldProps("Name")}></input>
                     {formik.touched.Name && formik.errors.Name ? <span style={{ color: 'red' }}>{formik.errors.Name}</span> : null}
                 </p>
                 <p>
                     <label htmlFor="Location">Employee Location:</label>
-                    <input type="text" name="Location" id="Location" value={formik.values.Location} onChange={formik.handleChange} onBlur={formik.handleBlur}></input>
+                    <input type="text" name="Location" {...formik.getFieldProps("Location")}></input>
                     {formik.touched.Location && formik.errors.Location ? <span style={{ color: 'red' }}>{formik.errors.Location}</span> : null}
                 </p>
                 <p>
                     <label htmlFor="Salary">Employee Salary:</label>
-                    <input type="text" name="Salary" id="Salary" value={formik.values.Salary} onChange={formik.handleChange}></input>
+                    <input type="text" name="Salary" {...formik.getFieldProps("Salary")}></input>
                 </p>
                 <p>
                     <label htmlFor="EmailId">Employee Email Id:</label>
-                    <input type="text" name="EmailId" id="EmailId" value={formik.values.EmailId} onChange={formik.handleChange} onBlur={formik.handleBlur}></input>
+                    <input type="text" name="EmailId" {...formik.getFieldProps("EmailId")}></input>
                     {formik.touched.EmailId && formik.errors.EmailId ? <span style={{ color: 'red' }}>{formik.errors.EmailId}</span> : null}
                 </p>
                 <button type="submit">Create</button>
